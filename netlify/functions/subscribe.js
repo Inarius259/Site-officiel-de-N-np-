@@ -14,7 +14,6 @@ export default async (event) => {
       },
       body: JSON.stringify({
         email: email,
-        listIds: [1],
         updateEnabled: true
       })
     });
