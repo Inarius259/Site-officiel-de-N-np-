@@ -1,9 +1,12 @@
-export default async (event) => {
+exports.handler = async (event) => {
   try {
-    const { email } = await event.json();
+    const { email } = JSON.parse(event.body);
 
     if (!email) {
-      return new Response(JSON.stringify({ message: "Email requis" }), { status: 400 });
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "Email requis" })
+      };
     }
 
     const response = await fetch("https://api.brevo.com/v3/contacts", {
@@ -21,14 +24,23 @@ export default async (event) => {
     const data = await response.text();
 
     if (!response.ok) {
-      console.log(data);
-      return new Response(JSON.stringify({ message: "Erreur Brevo" }), { status: 500 });
+      console.log("Brevo error:", data);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ message: "Erreur Brevo", error: data })
+      };
     }
 
-    return new Response(JSON.stringify({ message: "Inscription réussie 🚀" }), { status: 200 });
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "Inscription réussie 🚀" })
+    };
 
   } catch (error) {
-    console.log(error);
-    return new Response(JSON.stringify({ message: "Erreur serveur Netlify" }), { status: 500 });
+    console.log("Server error:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: "Erreur serveur Netlify", error: error.message })
+    };
   }
 };
