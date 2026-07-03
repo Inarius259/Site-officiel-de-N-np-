@@ -2,46 +2,62 @@ import { supabase } from "./supabase.js";
 
 let rating = 0;
 
-/* ⭐ étoiles */
-document.querySelectorAll("#stars span").forEach(star => {
-  star.addEventListener("click", () => {
-    rating = Number(star.dataset.value);
-  });
-});
+/* ⭐ ÉTOILES */
+const stars = document.querySelectorAll("#stars span");
 
-/* 💬 formulaire */
+if (stars.length > 0) {
+  stars.forEach(star => {
+    star.addEventListener("click", () => {
+      rating = Number(star.dataset.value);
+      console.log("rating =", rating);
+    });
+  });
+}
+
+/* 💬 FORMULAIRE */
 const form = document.getElementById("formulaire-avis");
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  const username = form.querySelector("input").value;
-  const message = form.querySelector("textarea").value;
+    const username = form.querySelector("input").value;
+    const message = form.querySelector("textarea").value;
 
-  const { error } = await supabase
-    .from("commentaires")
-    .insert([
-      {
-        username,
-        message,
-        rating
-      }
-    ]);
+    console.log("ENVOI CLICK");
+    console.log({ username, message, rating });
 
-  if (!error) {
+    const { error } = await supabase
+      .from("commentaires")
+      .insert([
+        {
+          username,
+          message,
+          rating
+        }
+      ]);
+
+    if (error) {
+      console.log("ERREUR SUPABASE:", error);
+      return;
+    }
+
     form.reset();
     loadComments();
-  } else {
-    console.log(error);
-  }
-});
+  });
+}
 
-/* 👀 afficher commentaires */
+/* 👀 AFFICHAGE COMMENTAIRES */
 async function loadComments() {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("commentaires")
     .select("*")
     .order("created_at", { ascending: false });
+
+  if (error) {
+    console.log("LOAD ERROR:", error);
+    return;
+  }
 
   const top = document.getElementById("topComments");
   const bottom = document.getElementById("comments");
@@ -78,4 +94,5 @@ async function loadComments() {
   });
 }
 
+/* 🚀 CHARGEMENT INITIAL */
 loadComments();
