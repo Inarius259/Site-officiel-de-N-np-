@@ -191,25 +191,32 @@
 
     <!-- Formulaire commentaire -->
           <!-- ⭐ étoiles -->
-<div id="stars">
+          <div id="stars">
   <span data-value="1">★</span>
   <span data-value="2">★</span>
   <span data-value="3">★</span>
   <span data-value="4">★</span>
   <span data-value="5">★</span>
 </div>
-          <div id="topComments"></div>
-          <div id="comments"></div>
-    <form id="formulaire-avis" class="reveal">
-        <input type="text" class="reveal" placeholder="Votre nom"required>
-        <textarea class="reveal" placeholder="Écrivez votre commentaire ici..."rows="4"required></textarea><br>
-        <button type="submit" class="reveal">Envoyer</button>
-        <div class="bg-pattern">
-      <span></span><span></span><span></span><span></span>
-       <span></span><span></span><span></span><span></span>
-       <span></span><span></span><span></span><span></span>
-           </div>
-    </form>
+
+<div id="topComments"></div>
+<div id="comments"></div>
+
+<form id="formulaire-avis" class="reveal">
+
+  <input type="text" id="username" placeholder="Votre nom" required>
+
+  <textarea id="message" placeholder="Écrivez votre commentaire ici..." rows="4" required></textarea>
+
+  <button type="submit">Envoyer</button>
+
+</form>
+
+<div class="bg-pattern">
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span>
+</div>
     
 
         </section>
