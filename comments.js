@@ -3,7 +3,7 @@ import { supabase } from "./supabase.js";
 // Ajouter un commentaire
 export async function addComment(username, message) {
   const { error } = await supabase
-    .from("comments")
+    .from("commentaires")
     .insert([
       {
         username,
