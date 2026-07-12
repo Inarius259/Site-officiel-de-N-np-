@@ -990,3 +990,9 @@ footer-premium{
         font-size:2.5rem;
     }
 }
+
+.Fcolor {
+  background: #00e6ff;
+  border-radius: 5px;
+  padding: 15px;
+}
